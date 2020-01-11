@@ -9,7 +9,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ApiClient {
-    private static final String BASE_URL = "https://imgur.com/";
+    private static final String BASE_URL = "https://api.imgur.com/";
 
     private static Gson gson = new GsonBuilder()
             .setLenient()

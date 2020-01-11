@@ -6,16 +6,20 @@ import androidx.lifecycle.ViewModelProviders;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.GridView;
 
 import com.challenge.code.gallery.models.Cat;
 import com.challenge.code.gallery.models.cat.Datum;
 import com.challenge.code.gallery.models.cat.Image;
+import com.challenge.code.gallery.utils.GalleryAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
+
+    private GridView gridView;
 
     private MainViewModel viewModel;
     private List<String> links = new ArrayList<>();
@@ -24,6 +28,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        gridView = findViewById(R.id.gv);
+
         setupViewModel();
         viewModel.fetchCats();
     }
@@ -47,6 +54,8 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                 }
+                GalleryAdapter galleryAdapter = new GalleryAdapter(MainActivity.this, links);
+                gridView.setAdapter(galleryAdapter);
             }
         });
         viewModel.getLoading().observe(this, new Observer<Boolean>() {

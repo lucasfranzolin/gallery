@@ -4,6 +4,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -37,6 +38,8 @@ public class GalleryAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ImageView imageView = new ImageView(mContext);
+        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(300, 400);
+        imageView.setLayoutParams(layoutParams);
         Glide.with(mContext).load(links.get(position)).into(imageView);
         return imageView;
     }

@@ -6,7 +6,10 @@ import androidx.lifecycle.ViewModelProviders;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.GridView;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.challenge.code.gallery.models.Cat;
 import com.challenge.code.gallery.models.cat.Datum;
@@ -20,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
 
     private GridView gridView;
+    private ProgressBar progressBar;
 
     private MainViewModel viewModel;
     private List<String> links = new ArrayList<>();
@@ -30,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         gridView = findViewById(R.id.gv);
+        progressBar = findViewById(R.id.pb);
 
         setupViewModel();
         viewModel.fetchCats();
@@ -61,13 +66,14 @@ public class MainActivity extends AppCompatActivity {
         viewModel.getLoading().observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean aBoolean) {
-                Log.d(TAG, "getLoading() onChanged: " + aBoolean);
+                if (aBoolean) progressBar.setVisibility(View.VISIBLE);
+                else progressBar.setVisibility(View.GONE);
             }
         });
         viewModel.getError().observe(this, new Observer<String>() {
             @Override
             public void onChanged(String s) {
-                Log.d(TAG, "getError() onChanged: " + s);
+                Toast.makeText(MainActivity.this, "Error, verify connection.", Toast.LENGTH_LONG);
             }
         });
     }

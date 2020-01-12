@@ -27,7 +27,7 @@ public class MainViewModel  extends AndroidViewModel {
         super(application);
     }
 
-    public void fetchCats() {
+    void fetchCats() {
         loading.setValue(true);
         api.getCats().enqueue(new RetrofitCallback<Cat>() {
             @Override
@@ -52,15 +52,15 @@ public class MainViewModel  extends AndroidViewModel {
         });
     }
 
-    public MutableLiveData<Cat> getCats() {
+    MutableLiveData<Cat> getCats() {
         return cats;
     }
 
-    public MutableLiveData<Boolean> getLoading() {
+    MutableLiveData<Boolean> getLoading() {
         return loading;
     }
 
-    public MutableLiveData<String> getError() {
+    MutableLiveData<String> getError() {
         return error;
     }
 }

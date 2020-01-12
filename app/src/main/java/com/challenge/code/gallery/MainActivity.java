@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -19,11 +20,12 @@ import com.challenge.code.gallery.utils.GalleryAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private static final String TAG = "MainActivity";
 
     private GridView gridView;
     private ProgressBar progressBar;
+    private Button button;
 
     private MainViewModel viewModel;
     private List<String> links = new ArrayList<>();
@@ -35,6 +37,8 @@ public class MainActivity extends AppCompatActivity {
 
         gridView = findViewById(R.id.gv);
         progressBar = findViewById(R.id.pb);
+        button = findViewById(R.id.btn);
+        button.setOnClickListener(this);
 
         setupViewModel();
         viewModel.fetchCats();
@@ -73,9 +77,19 @@ public class MainActivity extends AppCompatActivity {
         viewModel.getError().observe(this, new Observer<String>() {
             @Override
             public void onChanged(String s) {
-                Toast.makeText(MainActivity.this, "Error, verify connection.", Toast.LENGTH_LONG);
+                if (s != "") button.setVisibility(View.VISIBLE);
+                Toast.makeText(MainActivity.this, s, Toast.LENGTH_LONG);
             }
         });
     }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btn:
+                button.setVisibility(View.GONE);
+                viewModel.fetchCats();
+                break;
+        }
+    }
 }

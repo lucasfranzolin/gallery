@@ -8,6 +8,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 
 import java.util.List;
 
@@ -38,9 +39,13 @@ public class GalleryAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ImageView imageView = new ImageView(mContext);
-        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(300, 400);
-        imageView.setLayoutParams(layoutParams);
-        Glide.with(mContext).load(links.get(position)).into(imageView);
+        imageView.setMaxHeight(300);
+        imageView.setMinimumHeight(300);
+
+        Glide.with(mContext)
+                .load(links.get(position))
+                .centerCrop()
+                .into(imageView);
         return imageView;
     }
 }
